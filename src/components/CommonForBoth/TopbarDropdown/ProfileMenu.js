@@ -5,6 +5,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Button
 } from "reactstrap";
 
 //i18n
@@ -17,6 +18,8 @@ import withRouter from "components/Common/withRouter";
 // users
 import user1 from "../../../assets/images/users/avatar-1.jpg";
 
+import {get,setToken} from "helpers/api_helper";
+
 const ProfileMenu = props => {
   // Declare a new state variable, which we'll call "menu"
   const [menu, setMenu] = useState(false);
@@ -24,19 +27,26 @@ const ProfileMenu = props => {
   const [username, setusername] = useState("Admin");
 
   useEffect(() => {
-    if (localStorage.getItem("authUser")) {
-      if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-        const obj = JSON.parse(localStorage.getItem("authUser"));
-        setusername(obj.displayName);
-      } else if (
-        process.env.REACT_APP_DEFAULTAUTH === "fake" ||
-        process.env.REACT_APP_DEFAULTAUTH === "jwt"
-      ) {
-        const obj = JSON.parse(localStorage.getItem("authUser"));
-        setusername(obj.username);
-      }
+    if (localStorage.getItem("user")) {
+      const userData=JSON.parse(localStorage.getItem("user"));
+      const username=userData.first_name + " " + userData.last_name;
+      setusername(username); 
     }
   }, [props.success]);
+
+  function logout(){
+    setToken(localStorage.getItem("_token"));
+
+    get("/logout")
+    .then((res)=>{
+      localStorage.removeItem("_token");
+      localStorage.removeItem("user");
+      window.location.reload();
+    },(e)=>{console.log(e)})
+  }
+
+
+
 
   return (
     <React.Fragment>
@@ -78,10 +88,11 @@ const ProfileMenu = props => {
             {props.t("Lock screen")}
           </DropdownItem>
           <div className="dropdown-divider" />
-          <Link to="/logout" className="dropdown-item">
+          <Button className="dropdown-item" onClick={logout}>
             <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />
             <span>{props.t("Logout")}</span>
-          </Link>
+          </Button>
+      
         </DropdownMenu>
       </Dropdown>
     </React.Fragment>

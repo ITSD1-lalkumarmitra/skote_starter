@@ -8,13 +8,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { Link } from "react-router-dom";
 import withRouter from "components/Common/withRouter";
-
+import { ToastContainer } from "react-toastify";
 // Formik validation
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
 // actions
-import { loginUser, socialLogin } from "../../store/actions";
+import { loginUser } from "../../store/actions";
 
 // import images
 import profile from "assets/images/profile-img.png";
@@ -23,17 +23,16 @@ import logo from "assets/images/logo.svg";
 const Login = props => {
 
   //meta title
-  document.title = "Login | Skote - React Admin & Dashboard Template";
+  document.title = "Login | Unboxmenu";
 
   const dispatch = useDispatch();
 
   const validation = useFormik({
-    // enableReinitialize : use this  flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      email: "admin@themesbrand.com" || '',
-      password: "123456" || '',
+      email: "admin@ubx.com" || "",
+      password: "admin123456" || "",
     },
     validationSchema: Yup.object({
       email: Yup.string().required("Please Enter Your Email"),
@@ -57,17 +56,18 @@ const Login = props => {
       error
   } = useSelector(LoginProperties);
 
-    const signIn = type => {
-        dispatch(socialLogin(type, props.router.navigate));
-    };
 
-  //for facebook and google authentication
-  const socialResponse = type => {
-    signIn(type);
-  };
 
-  //handleTwitterLoginResponse
-  // const twitterResponse = e => {}
+  //   const signIn = type => {
+  //       dispatch(socialLogin(type, props.router.navigate));
+  //   };
+
+  // //for facebook and google authentication
+  // const socialResponse = type => {
+  //   signIn(type);
+  // };
+
+
 
   return (
     <React.Fragment>
@@ -180,47 +180,13 @@ const Login = props => {
 
                         <ul className="list-inline">
                           <li className="list-inline-item">
-                          <Link
-                              to="#"
-                              className="social-list-item bg-primary text-white border-primary"
-                              onClick={e => {
-                                e.preventDefault();
-                                socialResponse("facebook");
-                              }}
-                            >
+                          <Link to="#"className="social-list-item bg-primary text-white border-primary" >
                               <i className="mdi mdi-facebook" />
                             </Link>
                           </li>
-                          {/*<li className="list-inline-item">*/}
-                          {/*  <TwitterLogin*/}
-                          {/*    loginUrl={*/}
-                          {/*      "http://localhost:4000/api/v1/auth/twitter"*/}
-                          {/*    }*/}
-                          {/*    onSuccess={this.twitterResponse}*/}
-                          {/*    onFailure={this.onFailure}*/}
-                          {/*    requestTokenUrl={*/}
-                          {/*      "http://localhost:4000/api/v1/auth/twitter/revers"*/}
-                          {/*    }*/}
-                          {/*    showIcon={false}*/}
-                          {/*    tag={"div"}*/}
-                          {/*  >*/}
-                          {/*    <a*/}
-                          {/*      href=""*/}
-                          {/*      className="social-list-item bg-info text-white border-info"*/}
-                          {/*    >*/}
-                          {/*      <i className="mdi mdi-twitter"/>*/}
-                          {/*    </a>*/}
-                          {/*  </TwitterLogin>*/}
-                          {/*</li>*/}
+                       
                           <li className="list-inline-item">
-                          <Link
-                              to="#"
-                              className="social-list-item bg-danger text-white border-danger"
-                              onClick={e => {
-                                e.preventDefault();
-                                socialResponse("google");
-                              }}
-                            >
+                          <Link to="#"className="social-list-item bg-danger text-white border-danger">
                               <i className="mdi mdi-google" />
                             </Link>
                           </li>
@@ -246,14 +212,15 @@ const Login = props => {
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Skote. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
+                  © {new Date().getFullYear()} Unboxmenu. Crafted with{" "}
+                  <i className="mdi mdi-heart text-danger" /> by our Teams
                 </p>
               </div>
             </Col>
           </Row>
         </Container>
       </div>
+      <ToastContainer />
     </React.Fragment>
   );
 };

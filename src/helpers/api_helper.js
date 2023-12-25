@@ -1,17 +1,21 @@
 import axios from "axios";
-import accessToken from "./jwt-token-access/accessToken";
+
 
 //pass new generated access token here
-const token = accessToken;
+// const token = localStorage.getItem("_token");
 
 //apply base url for axios
-const API_URL = "";
+const API_URL = "https://unboxmenu.com/s/api";
 
 const axiosApi = axios.create({
   baseURL: API_URL,
 });
 
-axiosApi.defaults.headers.common["Authorization"] = token;
+// axiosApi.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+export function setToken(token){
+  axiosApi.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+}
 
 axiosApi.interceptors.response.use(
   (response) => response,

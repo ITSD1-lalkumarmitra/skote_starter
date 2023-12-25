@@ -3,7 +3,7 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_USER,
   LOGOUT_USER_SUCCESS,
-  API_ERROR,
+  LOGIN_FAIL,
 } from "./actionTypes"
 
 const initialState = {
@@ -32,7 +32,7 @@ const login = (state = initialState, action) => {
     case LOGOUT_USER_SUCCESS:
       state = { ...state , isUserLogout: true}
       break
-    case API_ERROR:
+    case LOGIN_FAIL:
       state = { ...state, error: action.payload, loading: false,isUserLogout: false, }
       break
     default:

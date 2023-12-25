@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 
 // action
-import { registerUser, apiError } from "../../store/actions";
+import { registerUser,  } from "../../store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
