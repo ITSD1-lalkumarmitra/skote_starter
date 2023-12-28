@@ -52,10 +52,7 @@ const Login = props => {
         loading:login.loading        
       })
   );
-  const {error,loading} = useSelector(LoginProperties);
-  useEffect(() => {
-    dispatch(changePreloader({status:loading,text:'Logging In Please wait ....'}));
-  }, [loading]);
+  const {error} = useSelector(LoginProperties);
   return (
     <React.Fragment>
       <div className="account-pages d-flex align-items-center position-absolute w-100 h-100 bg-light">
