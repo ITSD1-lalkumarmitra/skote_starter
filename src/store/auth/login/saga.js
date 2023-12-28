@@ -9,15 +9,13 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function* loginUser({ payload: { user, history } }) {
   try {
-      const response = yield call(auth.login, user);
-      localStorage.setItem("_token", JSON.stringify(response._token).slice(1, -1));
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-      yield put({type:LOGIN_SUCCESS,payload:response.data.user});
-      toast.success("Login Successfully.", { autoClose: 2000 });
-      history("/dashboard");
-
+    const response = yield call(auth.login, user);
+    localStorage.setItem("_token", JSON.stringify(response._token).slice(1, -1));
+    localStorage.setItem("user", JSON.stringify(response.data.user));
+    yield put({type:LOGIN_SUCCESS,payload:response.data.user});
+    toast.success("Login Successfully.", { autoClose: 2000 });
+    history("/dashboard");
   } catch (error) {
-
     yield put({type:LOGIN_FAIL});
 		toast.error("Invalid Credentials.", { autoClose: 2000 });
   }

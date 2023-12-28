@@ -8,7 +8,7 @@ import { layoutTypes } from "./constants/layout";
 import { authProtectedRoutes, publicRoutes } from "./routes";
 
 // Import all middleware
-import Authmiddleware from "./routes/route";
+import {Authmiddleware,GuestMiddleware} from "./routes/route";
 
 // layouts Format
 import VerticalLayout from "./components/VerticalLayout/";
@@ -56,9 +56,9 @@ const App = () => {
           <Route
             path={route.path}
             element={
-              <NonAuthLayout>
-                {route.component}
-              </NonAuthLayout>
+              <GuestMiddleware >
+                <NonAuthLayout> {route.component} </NonAuthLayout>
+              </GuestMiddleware>
             }
             key={idx}
             exact={true}
