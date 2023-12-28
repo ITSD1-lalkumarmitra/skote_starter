@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Row, Col, CardBody, Card, Alert, Container, Form, Input, FormFeedback, Label } from "reactstrap";
+import Preloader from "components/Common/Preloader";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -24,7 +25,7 @@ const Login = props => {
 
   //meta title
   document.title = "Login | Unboxmenu";
-
+  const [isBusy,setBusy] = useState(false);
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -39,40 +40,33 @@ const Login = props => {
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
+      setBusy(true);
       dispatch(loginUser(values, props.router.navigate));
     }
   });
 
 
   const selectLoginState = (state) => state.Login;
-    const LoginProperties = createSelector(
-      selectLoginState,
-        (login) => ({
-          error: login.error          
-        })
-    );
-
-    const {
-      error
-  } = useSelector(LoginProperties);
-
-
-
-  //   const signIn = type => {
-  //       dispatch(socialLogin(type, props.router.navigate));
-  //   };
-
-  // //for facebook and google authentication
-  // const socialResponse = type => {
-  //   signIn(type);
-  // };
+  const LoginProperties = createSelector(
+    selectLoginState,
+      (login) => ({
+        error: login.error,        
+      })
+  );
+  const {error} = useSelector(LoginProperties);
+  useEffect(() => {
+    console.log('Error occurred. Setting busy to false.');
+    setBusy(false);
+    // dispatch(setBusy(false));
+  }, [error]);
 
 
 
   return (
     <React.Fragment>
-      <div className="account-pages my-5 pt-sm-5">
-        <Container>
+      {isBusy?<Preloader text={"Logging In Please Wait ..."}/>:null}
+      <div className="account-pages d-flex align-items-center position-absolute w-100 h-100 bg-light">
+        <Container >
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
               <Card className="overflow-hidden">
@@ -152,45 +146,13 @@ const Login = props => {
                         ) : null}
                       </div>
 
-                      <div className="form-check">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id="customControlInline"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="customControlInline"
-                        >
-                          Remember me
-                        </label>
-                      </div>
-
-                      <div className="mt-3 d-grid">
+                      <div className="mt-3 py-4 d-grid">
                         <button
                           className="btn btn-primary btn-block"
                           type="submit"
                         >
                           Log In
                         </button>
-                      </div>
-
-                      <div className="mt-4 text-center">
-                        <h5 className="font-size-14 mb-3">Sign in with</h5>
-
-                        <ul className="list-inline">
-                          <li className="list-inline-item">
-                          <Link to="#"className="social-list-item bg-primary text-white border-primary" >
-                              <i className="mdi mdi-facebook" />
-                            </Link>
-                          </li>
-                       
-                          <li className="list-inline-item">
-                          <Link to="#"className="social-list-item bg-danger text-white border-danger">
-                              <i className="mdi mdi-google" />
-                            </Link>
-                          </li>
-                        </ul>
                       </div>
 
                       <div className="mt-4 text-center">
@@ -203,19 +165,6 @@ const Login = props => {
                   </div>
                 </CardBody>
               </Card>
-              <div className="mt-5 text-center">
-                <p>
-                  Don&#39;t have an account ?{" "}
-                  <Link to="/register" className="fw-medium text-primary">
-                    {" "}
-                    Signup now{" "}
-                  </Link>{" "}
-                </p>
-                <p>
-                  © {new Date().getFullYear()} Unboxmenu. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by our Teams
-                </p>
-              </div>
             </Col>
           </Row>
         </Container>
