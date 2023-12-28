@@ -17,6 +17,7 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 import RightSidebar from "../CommonForBoth/RightSidebar";
+import Preloader from "components/Common/Preloader";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -127,9 +128,10 @@ const Layout = props => {
       dispatch(changeTopbarTheme(topbarTheme));
     }
   }, [topbarTheme, dispatch]);
-
+  const loadingData = useSelector(state=>state.Layout.isPreloader);
   return (
     <React.Fragment>
+      {loadingData.status?<Preloader text={loadingData.text}/>:null}
       <div id="layout-wrapper">
         <Header toggleMenuCallback={toggleMenuCallback} />
         <Sidebar

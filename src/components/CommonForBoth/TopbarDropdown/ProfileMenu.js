@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import PropTypes from 'prop-types';
 import {
   Dropdown,
@@ -14,6 +15,8 @@ import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import withRouter from "components/Common/withRouter";
+import {changePreloader} from "store/layout/actions";
+
 
 // users
 import user1 from "../../../assets/images/users/avatar-1.jpg";
@@ -33,16 +36,19 @@ const ProfileMenu = props => {
       setusername(username); 
     }
   }, [props.success]);
-
+  const dispatch = useDispatch();
   function logout(){
     setToken(localStorage.getItem("_token"));
-
+    dispatch(changePreloader({status:true,text:'Logging out Please wait ....'}));
     get("/logout")
     .then((res)=>{
       localStorage.removeItem("_token");
       localStorage.removeItem("user");
       window.location.reload();
-    },(e)=>{console.log(e)})
+    },(e)=>{
+      dispatch(changePreloader({status:false,text:''}));
+      console.log(e)
+    })
   }
 
 

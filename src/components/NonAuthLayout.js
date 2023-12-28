@@ -4,6 +4,7 @@ import withRouter from './Common/withRouter';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from "reselect";
 import { changeLayoutMode } from 'store/actions';
+import Preloader from "components/Common/Preloader";
 
 const NonAuthLayout = (props) => {
   const dispatch = useDispatch();
@@ -25,9 +26,13 @@ const NonAuthLayout = (props) => {
       dispatch(changeLayoutMode(layoutModeType));
     }
   }, [layoutModeType, dispatch]);
+  const loadingData = useSelector(state=>state.Layout.isPreloader);
 
   return (
-    <React.Fragment>{props.children}</React.Fragment>
+    <React.Fragment>
+      {loadingData.status?<Preloader text={loadingData.text}/>:null}
+      {props.children}
+    </React.Fragment>
   );
 };
 

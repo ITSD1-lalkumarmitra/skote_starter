@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import withRouter from 'components/Common/withRouter';
 import PropTypes from "prop-types";
-
 //actions
 import {
   changeLayout,
@@ -21,6 +20,7 @@ import Navbar from "./Navbar";
 import Header from "./Header";
 import Footer from "./Footer";
 import RightSidebar from "../CommonForBoth/RightSidebar";
+import Preloader from 'components/Common/Preloader';
 
 const Layout = (props) => {
 
@@ -123,9 +123,10 @@ const Layout = (props) => {
   const openMenu = () => {
     setIsMenuOpened(!isMenuOpened);
   };
-
+  const loadingData = useSelector(state=>state.Layout.isPreloader);
   return (
     <React.Fragment>
+      {loadingData.status?<Preloader text={loadingData.text}/>:null}      
       <div id="preloader">
         <div id="status">
           <div className="spinner-chase">
