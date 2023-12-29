@@ -32,7 +32,7 @@ const INIT_STATE = {
   leftSideBarThemeImage: leftBarThemeImageTypes.NONE,
   leftSideBarType: leftSidebarTypes.DEFAULT,
   topbarTheme: topBarThemeTypes.LIGHT,
-  isPreloader: false,
+  isPreloader: {status:false,message:''},
   showRightSidebar: false,
   isMobile: false,
   showSidebar: true,
@@ -45,7 +45,7 @@ const Layout = (state = INIT_STATE, action) => {
         ...state,
         layoutType: action.payload,
       }
-    case CHANGE_PRELOADER:
+    case CHANGE_PRELOADER:{}
       return {
         ...state,
         isPreloader: action.payload,

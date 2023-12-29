@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 
 import { Row, Col, CardBody, Card, Alert, Container, Form, Input, FormFeedback, Label } from "reactstrap";
-import Preloader from "components/Common/Preloader";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -16,6 +15,7 @@ import { useFormik } from "formik";
 
 // actions
 import { loginUser } from "../../store/actions";
+import {changePreloader} from "../../store/layout/actions";
 
 // import images
 import profile from "assets/images/profile-img.png";
@@ -25,7 +25,6 @@ const Login = props => {
 
   //meta title
   document.title = "Login | Unboxmenu";
-  const [isBusy,setBusy] = useState(false);
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -40,7 +39,6 @@ const Login = props => {
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
-      setBusy(true);
       dispatch(loginUser(values, props.router.navigate));
     }
   });
@@ -50,21 +48,13 @@ const Login = props => {
   const LoginProperties = createSelector(
     selectLoginState,
       (login) => ({
-        error: login.error,        
+        error: login.error,
+        loading:login.loading        
       })
   );
   const {error} = useSelector(LoginProperties);
-  useEffect(() => {
-    console.log('Error occurred. Setting busy to false.');
-    setBusy(false);
-    // dispatch(setBusy(false));
-  }, [error]);
-
-
-
   return (
     <React.Fragment>
-      {isBusy?<Preloader text={"Logging In Please Wait ..."}/>:null}
       <div className="account-pages d-flex align-items-center position-absolute w-100 h-100 bg-light">
         <Container >
           <Row className="justify-content-center">
