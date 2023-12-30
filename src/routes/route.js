@@ -23,14 +23,16 @@ export const Authmiddleware = (props) => {
   useEffect(()=>{ validate(setTokenIsValid); },[])
   return (tokenIsValid)
   ?(<React.Fragment>{props.children}</React.Fragment>)
-  :((tokenIsValid === null)?(<Spinners setLoading={setLoading}></Spinners>):(<Navigate to={{ pathname: "/login", state: { from: props.location } }} />));
+  :((tokenIsValid === null)?(<Spinners setLoading={setLoading}></Spinners>):(<Navigate to={{ pathname: "/", state: { from: props.location } }} />));
 };
 
 export const GuestMiddleware = (props) =>{
   const [tokenIsValid,setTokenIsValid] = useState(null);
   const [loading,setLoading] = useState(true);
   useEffect(()=>{ validate(setTokenIsValid); },[])
+  const userRole = JSON.parse(localStorage.getItem('user')).role.role_type;
+  const routePrefix = userRole !== 'admin'? "/"+userRole : "";
   return (tokenIsValid)
-  ?(<Navigate to={{ pathname: "/dashboard", state: { from: props.location } }} />)
+  ?(<Navigate to={{ pathname: `${routePrefix}/dashboard`, state: { from: props.location } }} />)
   :((tokenIsValid == null)?(<Spinners setLoading={setLoading}></Spinners>):(<React.Fragment> {props.children} </React.Fragment>));
 }

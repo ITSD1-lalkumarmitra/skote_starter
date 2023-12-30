@@ -10,6 +10,7 @@ import SimpleBar from "simplebar-react";
 import MetisMenu from "metismenujs";
 import withRouter from "components/Common/withRouter";
 import { Link } from "react-router-dom";
+import { authProtectedRoutes } from "../../routes/index";
 
 //i18n
 import { withTranslation } from "react-i18next";
@@ -139,113 +140,25 @@ const SidebarContent = props => {
       }
     }
   }
-
+  const Authuser = JSON.parse(localStorage.getItem('user'))
   return (
     <React.Fragment>
       <SimpleBar className="h-100" ref={ref}>
         <div id="sidebar-menu">
           <ul className="metismenu list-unstyled" id="side-menu">
             <li className="menu-title">{props.t("Menu")} </li>
-            <li>
-              <Link to="/#" className="has-arrow">
-                <i className="bx bx-home-circle"></i>
-                <span>{props.t("Dashboards")}</span>
-              </Link>
-              <ul className="sub-menu">
-                <li>
-                  <Link to="/dashboard">{props.t("Default")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Saas")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Crypto")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Blog")}</Link>
-                </li>
-                <li>
-                  <Link to="#">
-                    {props.t("Job")}
-                  </Link>
-                </li>
-              </ul>
-            </li>
-
-            <li className="menu-title">{props.t("Manage")}</li>
-
-            <li>
-              <Link to="/#" className="has-arrow">
-                <i className="bx bx-store"></i>
-                <span>{props.t("User manage")}</span>
-              </Link>
-              <ul className="sub-menu">
-                <li>
-                  <Link to="#">{props.t("Staff")}</Link>
-                </li>
-                <li>
-                  <Link to="#">
-                    {props.t("staff list")}
-                  </Link>
-                </li>
-              
-                <li>
-                  <Link to="#">{props.t("Student")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Student List")}</Link>
-                </li>
-          
-              </ul>
-            </li>
-
-            <li>
-              <Link to="/#" className="has-arrow ">
-                <i className="bx bx-bitcoin"></i>
-                <span>{props.t("Fees Manage")}</span>
-              </Link>
-              <ul className="sub-menu">
-                
-                <li>
-                  <Link to="#">{props.t("Staff Fess")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Student Fess")}</Link>
-                </li>
-                
-              
-              </ul>
-            </li>
-
-            <li>
-              <Link to="/#" className="has-arrow ">
-                <i className="bx bx-envelope"></i>
-                <span>{props.t("Exam manage")}</span>
-              </Link>
-              <ul className="sub-menu">
-                <li>
-                  <Link to="#">{props.t("Add Question ")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Question List")} </Link>
-                </li>
-               
-              </ul>
-            </li>
-
-            <li>
-              <Link to="/#" className="has-arrow ">
-                <i className="bx bx-receipt"></i>
-                <span>{props.t("Result")}</span>
-              </Link>
-              <ul className="sub-menu">
-                <li>
-                  <Link to="#">{props.t("student Rank")}</Link>
-                </li>
-             
-              </ul>
-            </li>
-
+            {
+              authProtectedRoutes.map((route,idx)=>(
+                route.user === Authuser.role.role_type && route.is_menu
+                ?(route.children.length 
+                  ?(<li key={idx}>
+                      <Link to="/#" className="has-arrow"><i className={route.icon?route.icon:`bx bx-home-circle`}></i><span>{props.t(route.label)}</span></Link>
+                      <ul>{route.children.map((child,id)=>(<li key={id}><Link to={child.path}>{props.t(child.label)}</Link></li>))}</ul>
+                    </li>)
+                  :(<li key={idx}><Link to={route.path} ><i className={route.icon?route.icon:`bx bx-home-circle`}></i><span>{props.t(route.label)}</span></Link></li>))
+                : null
+              ))
+            }
           </ul>
         </div>
       </SimpleBar>
