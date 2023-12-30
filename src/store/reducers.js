@@ -9,6 +9,9 @@ import Account from "./auth/register/reducer";
 import ForgetPassword from "./auth/forgetpwd/reducer";
 import Profile from "./auth/profile/reducer";
 
+//Student Manage data 
+import StudentReducer from "./usermanagement/students/reducer";
+
 const rootReducer = combineReducers({
   // public
   Layout,
@@ -16,6 +19,7 @@ const rootReducer = combineReducers({
   Account,
   ForgetPassword,
   Profile,
+  StudentReducer,
 });
 
 export default rootReducer;

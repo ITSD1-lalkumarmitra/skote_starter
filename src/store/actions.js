@@ -7,3 +7,8 @@ export * from "./auth/forgetpwd/actions";
 export * from "./auth/profile/actions";
 
 
+//User Management module
+
+export * from "./usermanagement/students/actions";
+
+
