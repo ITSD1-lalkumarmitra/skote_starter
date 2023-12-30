@@ -9,6 +9,7 @@ import LayoutSaga from "./layout/saga";
 
 //user 
 import StudentSaga from "./usermanagement/students/saga";
+import StaffSaga from "./usermanagement/staff/saga";
 export default function* rootSaga() {
   yield all([
     //public
@@ -18,5 +19,6 @@ export default function* rootSaga() {
     fork(ProfileSaga),
     fork(LayoutSaga),
     fork(StudentSaga),
+    fork(StaffSaga),
   ]);
 }

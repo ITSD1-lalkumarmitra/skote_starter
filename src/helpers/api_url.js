@@ -7,8 +7,15 @@ export const auth={
 // student api url
 export const student={
     add: data =>post("/user",data),
-    list: () =>post("/users"),
-    delete: (id) =>post(`/user/${id}`),
+    list: () =>get("users/role-type/student"),
+    delete: (id) =>del(`/user/${id}`),
+}
+
+// Staff api url
+export const staff={
+    add: data =>post("/user",data),
+    list: () =>get("users/role-type/staff"),
+    delete: (id) =>del(`/user/${id}`),
 }
 
 

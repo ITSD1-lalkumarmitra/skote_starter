@@ -10,5 +10,6 @@ export * from "./auth/profile/actions";
 //User Management module
 
 export * from "./usermanagement/students/actions";
+export * from "./usermanagement/staff/actions";
 
 

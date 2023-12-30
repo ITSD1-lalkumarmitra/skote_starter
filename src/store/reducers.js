@@ -11,6 +11,7 @@ import Profile from "./auth/profile/reducer";
 
 //Student Manage data 
 import StudentReducer from "./usermanagement/students/reducer";
+import StaffReducer from "./usermanagement/staff/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   ForgetPassword,
   Profile,
   StudentReducer,
+  StaffReducer,
 });
 
 export default rootReducer;
