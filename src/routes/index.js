@@ -14,22 +14,26 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 import Dashboard from "../pages/Dashboard/index";
 
 const authProtectedRoutes = [
-  { path: "/dashboard", component: <Dashboard /> },
-  // //profile
-  { path: "/profile", component: <UserProfile /> },
 
-  // this route should be at the end of all other routes
-  // eslint-disable-next-line react/display-name
-  {
-    path: "/",
-    exact: true,
-    component: <Navigate to="/dashboard" />,
+  // menu routes
+  { is_menu:true, label:"Dashboard", path: "/dashboard", component: <Dashboard />, user:'admin',icon:"mdi mdi-run",children:[]},
+  { is_menu:true, label:"Users", path: "", component: null, user:'admin',icon:"mdi mdi-run",children:[
+      {label:"Students", path: "/students", component: <Dashboard />},
+      {label:"Staffs", path: "/staffs", component: <Dashboard />}
+    ] 
   },
+
+
+
+  // non-menu routes
+  { is_menu:false, label:"Profile", path: "/profile", component: <UserProfile />, user:'admin',icon:"mdi mdi-run",children:[] },
+  { is_menu:false, label:"Logout", path: "/logout", component: <Logout />, user:null, children:[] },
+
 ];
 
 const publicRoutes = [
+  { path:"/", component:<Login/>},
   { path: "/login", component: <Login /> },
-  { path: "/logout", component: <Logout /> },
   { path: "/forgot-password", component: <ForgetPwd /> },
   { path: "/register", component: <Register /> },
 ];

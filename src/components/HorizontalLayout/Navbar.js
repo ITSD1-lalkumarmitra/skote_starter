@@ -121,9 +121,7 @@ const Navbar = props => {
                     {props.t("Dashboard")} {props.menuOpen}
                     <div className="arrow-down"></div>
                   </Link>
-                  <div
-                    className={classname("dropdown-menu", { show: dashboard })}
-                  >
+                  <div className={classname("dropdown-menu", { show: dashboard })}>
                     <Link to="/dashboard" className="dropdown-item">
                       {props.t("Default")}
                     </Link>
