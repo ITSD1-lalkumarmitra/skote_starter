@@ -12,6 +12,7 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index";
+import AdminDashboard from "../pages/Dashboard/Admin/index";
 
 // Student
 import Student from "../pages/UserManagement/Student"
@@ -19,7 +20,7 @@ import Student from "../pages/UserManagement/Student"
 const authProtectedRoutes = [
 
   // menu routes
-  { is_menu:true, label:"Dashboard", path: "/dashboard", component: <Dashboard />, user:'admin',icon:"mdi mdi-run",children:[]},
+  { is_menu:true, label:"Dashboard", path: "/dashboard", component: <AdminDashboard />, user:'admin',icon:"mdi mdi-run",children:[]},
   { is_menu:true, label:"Users", path: "", component: null, user:'admin',icon:"mdi mdi-run",children:[
       {label:"Students", path: "/students", component: <Student />},
       {label:"Staffs", path: "/staffs", component: <Dashboard />}
